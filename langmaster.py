@@ -134,7 +134,7 @@ class LangMasterTranslation(tk.Tk):
         import darkdetect
 
         if darkdetect.isDark():
-            self.config(bg="black")
+            self.config(bg="gray20")
             self.input_text.config(bg="gray20", fg="white")
             self.output_text.config(bg="gray20", fg="white")
             self.translate_button.config(bg="gray20", fg="white")
