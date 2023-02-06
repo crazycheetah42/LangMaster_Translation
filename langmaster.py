@@ -128,6 +128,9 @@ class LangMasterTranslation(tk.Tk):
         self.language_dropdown = tk.OptionMenu(self, self.lang_var, *[lang[0] for lang in self.language_options])
         self.language_dropdown.pack(side="top", fill="both")
 
+        self.voice_search_button = tk.Button(self, text="Voice Search", command=self.voice_search, font=("Helvetica", 16))
+        self.voice_search_button.pack(side="bottom")
+
         self.translate_button = tk.Button(self, text="Translate", command=self.translate, font=("Helvetica", 16))
         self.translate_button.pack(side="bottom")
         
@@ -138,6 +141,7 @@ class LangMasterTranslation(tk.Tk):
             self.input_text.config(bg="gray20", fg="white")
             self.output_text.config(bg="gray20", fg="white")
             self.translate_button.config(bg="gray20", fg="white")
+            self.voice_search_button.config(bg="gray20", fg="white")
             self.language_dropdown.config(bg="gray20", fg="white")
         
     def translate(self):
@@ -146,6 +150,20 @@ class LangMasterTranslation(tk.Tk):
         output_text = self.translator.translate(input_text, dest=dest).text
         self.output_text.delete("1.0", tk.END)
         self.output_text.insert(tk.END, output_text)
+    def voice_search(self):
+        import speech_recognition as sr
+        r = sr.Recognizer()
+        with sr.Microphone() as source:
+            audio = r.listen(source)
+
+        try:
+            text = r.recognize_google(audio)
+            self.input_text.delete("1.0", tk.END)
+            self.input_text.insert("1.0", text)
+        except sr.UnknownValueError:
+            print("Google Speech Recognition could not understand audio")
+        except sr.RequestError as e:
+            print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
 app = LangMasterTranslation()
 app.iconbitmap("langmaster_logo.ico")
