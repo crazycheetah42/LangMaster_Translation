@@ -13,9 +13,6 @@ LangMaster supports all Google Translate languages. Upcoming features are:
 1. Screenshot readability
 
    This feature will allow you to upload an image and it will automatically get the text and translate it.
-2. Language detection
-
-   This will allow you to type in any language and it'll automatically detect it.
 3. More OSes!
 
    Most people (including me) use Windows, so I made a Windows executable for it. I will try my best to make Mac and Linux executables so everyone can enjoy this app.
