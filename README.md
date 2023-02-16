@@ -2,10 +2,12 @@
 This is LangMaster, a translation app for Windows. I made it in Python.
 
 Light mode:
-![image](https://user-images.githubusercontent.com/76403763/216731760-b1e58305-20dc-4808-b15b-6b017de0e052.png)
+![image](https://user-images.githubusercontent.com/76403763/219511482-027b0631-7bb1-44fb-8670-a4dd780bba76.png)
+
 
 Dark mode:
-![image](https://user-images.githubusercontent.com/76403763/216736861-2082205b-f535-4c7e-a09e-7e95336ad6dc.png)
+![image](https://user-images.githubusercontent.com/76403763/219511415-af848a38-9ebd-4d13-b2c7-848665b3cc69.png)
+
 
 LangMaster supports all Google Translate languages. Upcoming features are:
 1. Screenshot readability
