@@ -1,6 +1,5 @@
 import tkinter as tk
 from googletrans import Translator
-import sys
 
 class LangMasterTranslation(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -133,7 +132,6 @@ class LangMasterTranslation(tk.Tk):
 
         self.translate_button = tk.Button(self, text="Translate", command=self.translate, font=("Helvetica", 16))
         self.translate_button.pack(side="bottom")
-        
         import darkdetect
 
         if darkdetect.isDark():
@@ -166,5 +164,4 @@ class LangMasterTranslation(tk.Tk):
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
 app = LangMasterTranslation()
-app.iconbitmap("langmaster_logo.ico")
 app.mainloop()
