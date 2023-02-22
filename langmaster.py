@@ -1,5 +1,7 @@
 import tkinter as tk
 from googletrans import Translator
+import pytesseract
+import cv2
 
 class LangMasterTranslation(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -130,6 +132,9 @@ class LangMasterTranslation(tk.Tk):
         self.voice_search_button = tk.Button(self, text="Voice Search", command=self.voice_search, font=("Helvetica", 16))
         self.voice_search_button.pack(side="bottom")
 
+        self.translate_image_btn = tk.Button(self, text="Translate from Image", command=self.translate_img, font=("Helvetica", 16))
+        self.translate_image_btn.pack(side="bottom")
+
         self.translate_button = tk.Button(self, text="Translate", command=self.translate, font=("Helvetica", 16))
         self.translate_button.pack(side="bottom")
         import darkdetect
@@ -140,6 +145,7 @@ class LangMasterTranslation(tk.Tk):
             self.output_text.config(bg="gray20", fg="white")
             self.translate_button.config(bg="gray20", fg="white")
             self.voice_search_button.config(bg="gray20", fg="white")
+            self.translate_image_btn.config(bg="gray20", fg="white")
             self.language_dropdown.config(bg="gray20", fg="white")
         
     def translate(self):
@@ -162,6 +168,30 @@ class LangMasterTranslation(tk.Tk):
             print("Google Speech Recognition could not understand audio")
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
+    def translate_img(self):
+        from tkinter import filedialog
+        file_path = filedialog.askopenfilename()
+        image = cv2.imread(file_path)
+        try:
+            text = pytesseract.image_to_string(image)
+            self.input_text.delete("1.0", tk.END)
+            self.input_text.insert(tk.END, text)
+        except pytesseract.TesseractNotFoundError:
+            import tkinter as tk
+            root = tk.Tk()
+            root.title = "Tesseract not found"
+            label = tk.Label(root, text="The tesseract package needs to be installed. Would you like to install the tesseract package?").pack()
+            def yes():
+                import os
+                os.system('powershell Start-BitsTransfer -Source "https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.0.20221222.exe" -Destination "%temp%\\tesseract-ocr-w64-setup-5.3.0.20221222.exe"')
+                os.system("%temp%\\tesseract-ocr-w64-setup-5.3.0.20221222.exe")
+            def no():
+                root.destroy()
+            yesbutton = tk.Button(root, text="Yes", command=yes, font=("Helvetica", 12)).pack()
+            nobutton = tk.Button(root, text="No", command=no, font=("Helvetica", 12)).pack()
+            root.mainloop()
+
 
 app = LangMasterTranslation()
 app.mainloop()
