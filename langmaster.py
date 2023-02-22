@@ -181,13 +181,15 @@ class LangMasterTranslation(tk.Tk):
         except pytesseract.TesseractNotFoundError:
             import tkinter as tk
             root = tk.Tk()
-            root.wm_title = "Tesseract not found"
             root.title = "Tesseract not found"
+            root.wm_title = "Tesseract not found"
             label = tk.Label(root, text="The tesseract package needs to be installed. Would you like to install the tesseract package?").pack()
             def yes():
                 import os
                 os.system('powershell Start-BitsTransfer -Source "https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.0.20221222.exe" -Destination "%temp%\\tesseract-ocr-w64-setup-5.3.0.20221222.exe"')
                 os.system("%temp%\\tesseract-ocr-w64-setup-5.3.0.20221222.exe")
+                os.system("del %temp%\\tesseract-ocr-w64-setup-5.3.0.20221222.exe")
+                root.destroy()
             def no():
                 root.destroy()
             yesbutton = tk.Button(root, text="Yes", command=yes, font=("Helvetica", 12)).pack()
