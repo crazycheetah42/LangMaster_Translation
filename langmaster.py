@@ -174,12 +174,14 @@ class LangMasterTranslation(tk.Tk):
         file_path = filedialog.askopenfilename()
         image = cv2.imread(file_path)
         try:
+            pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
             text = pytesseract.image_to_string(image)
             self.input_text.delete("1.0", tk.END)
             self.input_text.insert(tk.END, text)
         except pytesseract.TesseractNotFoundError:
             import tkinter as tk
             root = tk.Tk()
+            root.wm_title = "Tesseract not found"
             root.title = "Tesseract not found"
             label = tk.Label(root, text="The tesseract package needs to be installed. Would you like to install the tesseract package?").pack()
             def yes():
