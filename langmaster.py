@@ -129,14 +129,19 @@ class LangMasterTranslation(tk.Tk):
         self.language_dropdown = tk.OptionMenu(self, self.lang_var, *[lang[0] for lang in self.language_options])
         self.language_dropdown.pack(side="top", fill="both")
 
-        self.voice_search_button = tk.Button(self, text="Voice Search", command=self.voice_search, font=("Helvetica", 16))
+        self.voice_search_button = tk.Button(self, text="Voice Search", command=self.voice_search, font=("Helvetica", 14))
         self.voice_search_button.pack(side="bottom")
 
-        self.translate_image_btn = tk.Button(self, text="Translate from Image", command=self.translate_img, font=("Helvetica", 16))
+        self.translate_image_btn = tk.Button(self, text="Translate from Image", command=self.translate_img, font=("Helvetica", 14))
         self.translate_image_btn.pack(side="bottom")
 
-        self.translate_button = tk.Button(self, text="Translate", command=self.translate, font=("Helvetica", 16))
+        self.translate_button = tk.Button(self, text="Translate", command=self.translate, font=("Helvetica", 14))
         self.translate_button.pack(side="bottom")
+
+        self.save_to_file_btn = tk.Button(self, text="Save text to file", command=self.save_text_to_file, font=("Helvetica", 14))
+        self.save_to_file_btn.pack(side="bottom")
+
+
         import darkdetect
 
         if darkdetect.isDark():
@@ -145,9 +150,21 @@ class LangMasterTranslation(tk.Tk):
             self.output_text.config(bg="gray20", fg="white")
             self.translate_button.config(bg="gray20", fg="white")
             self.voice_search_button.config(bg="gray20", fg="white")
+            self.save_to_file_btn.config(bg="gray20", fg="white")
             self.translate_image_btn.config(bg="gray20", fg="white")
             self.language_dropdown.config(bg="gray20", fg="white")
-        
+    
+    def save_text_to_file(self):
+        filetext = str(self.output_text.get("1.0", tk.END))
+        from tkinter import filedialog
+
+        file = filedialog.asksaveasfile(defaultextension=".txt",
+                                        filetypes=[
+                                            ("Text document (*.txt)", ".txt"),
+                                            ("All files (*)", "")
+                                        ])
+        file.write(filetext)
+        file.close()
     def translate(self):
         input_text = self.input_text.get("1.0", "end")
         dest = [lang[1] for lang in self.language_options if lang[0] == self.lang_var.get()][0]
